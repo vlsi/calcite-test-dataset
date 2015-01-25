@@ -1,0 +1,15 @@
+*~
+target
+.idea
+*.iml
+settings.xml
+.classpath.txt
+.fullclasspath.txt
+
+# eclipse
+.project
+.buildpath
+.classpath
+.settings
+
+/vm/.vagrant/

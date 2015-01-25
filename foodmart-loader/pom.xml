@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>parent</artifactId>
+    <groupId>com.github.vlsi.calcite</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>foodmart-loader</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+    <jdbc.batch.size>100</jdbc.batch.size>
+    <foodmart.dataset>foodmart</foodmart.dataset>
+    <foodmart.outputQuoted>true</foodmart.outputQuoted>
+    <foodmart.data.dir>${project.basedir}/../foodmart-dataset/target/foodmart-data</foodmart.data.dir>
+    <foodmart.data.sql>${foodmart.data.dir}/data.sql</foodmart.data.sql>
+    <foodmart.after.sql>${foodmart.data.dir}/after.sql</foodmart.after.sql>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.vlsi.calcite</groupId>
+      <artifactId>foodmart-dataset</artifactId>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.vlsi.calcite</groupId>
+      <artifactId>vm</artifactId>
+      <type>pom</type>
+    </dependency>
+
+    <dependency>
+      <groupId>pentaho</groupId>
+      <artifactId>mondrian</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>foodmart-load-jdbc</id>
+            <goals>
+              <goal>java</goal>
+            </goals>
+            <phase>integration-test</phase>
+            <configuration>
+              <mainClass>mondrian.test.loader.MondrianFoodMartLoader
+              </mainClass>
+              <arguments>
+                <argument>-verbose</argument>
+                <argument>-tables</argument>
+                <argument>-data</argument>
+                <argument>-indexes</argument>
+                <argument>-dataset=${foodmart.dataset}</argument>
+                <argument>-jdbcDrivers=${jdbc.driver}</argument>
+                <argument>-inputFile=${foodmart.data.sql}</argument>
+                <argument>-afterFile=${foodmart.after.sql}</argument>
+                <argument>-outputQuoted=${foodmart.outputQuoted}</argument>
+                <argument>-outputJdbcBatchSize=${jdbc.batch.size}</argument>
+                <argument>-outputJdbcURL=${jdbc.url}</argument>
+              </arguments>
+              <systemProperties>
+                <systemProperty>
+                  <key>log4j.configuration</key>
+                  <value>log4j.properties</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

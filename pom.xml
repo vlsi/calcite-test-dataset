@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>com.github.vlsi.calcite</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>./parent/pom.xml</relativePath>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>test-dataset</artifactId>
+  <name>test-dataset</name>
+  <description>Data set to test database engines</description>
+  <packaging>pom</packaging>
+
+  <url>http://github.com/vlsi/test-dataset</url>
+  <inceptionYear>2015</inceptionYear>
+  <organization>
+    <name>Vladimir Sitnikov</name>
+    <url>http://github.com/vlsi</url>
+  </organization>
+
+  <mailingLists>
+    <mailingList>
+      <name>Apache Calcite developers list</name>
+      <subscribe>dev-subscribe@calcite.incubator.apache.org</subscribe>
+      <unsubscribe>dev-unsubscribe@calcite.incubator.apache.org</unsubscribe>
+      <post>dev@calcite.incubator.apache.org</post>
+      <archive>http://mail-archives.apache.org/mod_mbox/incubator-calcite-dev</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:git:git://github.com/vlsi/test-dataset.git</connection>
+    <developerConnection>scm:git:git@github.com:vlsi/test-dataset.git</developerConnection>
+    <url>scm:git:git://github.com/vlsi/test-dataset.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <modules>
+    <module>parent</module>
+    <module>foodmart-dataset</module>
+    <module>zips</module>
+    <module>vm</module>
+    <module>h2</module>
+    <module>hsqldb</module>
+    <module>mysql</module>
+    <module>postgresql</module>
+  </modules>
+</project>

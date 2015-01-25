@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>foodmart-loader</artifactId>
+    <groupId>com.github.vlsi.calcite</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../foodmart-loader/pom.xml</relativePath>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>h2</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+    <jdbc.driver>org.h2.Driver</jdbc.driver>
+    <jdbc.url>jdbc:h2:${project.build.directory}/foodmart;INIT=create schema "foodmart"\;set schema "foodmart";user=foodmart;password=foodmart</jdbc.url>
+    <jdbc.batch.size>1</jdbc.batch.size>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+  </dependencies>
+</project>
