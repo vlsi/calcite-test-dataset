@@ -18,6 +18,7 @@
 
 Vagrant.configure(2) do |config|
   config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+  config.vm.box_url = "https://vagrantcloud.com/puppetlabs/boxes/ubuntu-13.10-64-puppet/versions/0.2.0/providers/virtualbox.box"
   config.vm.synced_folder "../foodmart-dataset/target", "/dataset/foodmart"
   config.vm.synced_folder "../zips/src/main/resources/dataset", "/dataset/zips"
   config.vm.synced_folder "target/apt", "/var/cache/apt/archives", :create => true
