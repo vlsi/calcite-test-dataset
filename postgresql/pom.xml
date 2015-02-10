@@ -16,7 +16,7 @@
 
   <properties>
     <jdbc.driver>org.postgresql.Driver</jdbc.driver>
-    <jdbc.url>jdbc:postgresql://localhost/foodmart?user=foodmart&amp;password=foodmart</jdbc.url>
+    <jdbc.url>jdbc:postgresql://localhost/foodmart?user=foodmart&amp;password=foodmart&amp;searchpath=foodmart</jdbc.url>
   </properties>
 
   <dependencies>

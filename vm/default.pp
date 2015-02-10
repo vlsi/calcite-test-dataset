@@ -74,6 +74,11 @@ node 'ubuntucalcite' {
       user     => 'foodmart',
       password => postgresql_password('foodmart', 'foodmart'),
     }
+    # Create postgresql database
+    postgresql::server::schema {'foodmart':
+      owner    => 'foodmart',
+      db       => 'foodmart',
+    }
 }
 
 node 'ubuntucalcite-not-yet-ready' {
