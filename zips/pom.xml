@@ -14,4 +14,6 @@
   <packaging>jar</packaging>
 
   <artifactId>zips</artifactId>
+  <name>zips</name>
+  <description>MongoDB zips test set</description>
 </project>
