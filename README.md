@@ -3,7 +3,7 @@
 This repository includes data sets and Vagrant script to provision a virtual machine
 with pre-installed databases.
 
-The idea is to have easily-available development machine for testing Apache Calcite.
+The idea is to have an easily-available development machine for testing Apache Calcite.
 
 # Requirements
 
@@ -17,8 +17,10 @@ The idea is to have easily-available development machine for testing Apache Calc
 # Installation
 
 Note: the databases are listening on the default ports, so you might need
-to pick another ports if you have MongoDB/MySQL/PosgreSQL running on your host machine.
+to pick other ports if you have MongoDB/MySQL/PostgreSQL running on your host machine.
 To update port forwarding, edit `vm/Vagrantfile`.
+
+Alternatively, run `shut.sh`, which will attempt to shut down your native databases.
 
 The step by step is as follows:
   * Install <a href="https://www.virtualbox.org/">Virtual Box</a>
@@ -28,7 +30,7 @@ The step by step is as follows:
 mvn install # this will download base image and install all the databases
 ```
 
-Note: it would take you 10-30 minutes depending on your machine and internet connection.
+Note: it might take 10-30 minutes depending on your machine and internet connection.
 
 # List of created databases
 
@@ -84,6 +86,8 @@ connecting to: test
 > show collections
 system.indexes
 zips
+> exit
+bye
 ```
 
 Foodmart data:
@@ -99,6 +103,8 @@ agg_c_14_sales_fact_1997
 agg_c_special_sales_fact_1997
 agg_g_ms_pcat_sales_fact_1997
 ...
+> exit
+bye
 ```
 
 ## Accessing MySQL in the VM
@@ -108,8 +114,7 @@ vagrant@ubuntucalcite:~$ mysql --user=foodmart --password=foodmart --database=fo
 ...
 Server version: 5.5.40-0ubuntu0.14.04.1 (Ubuntu)
 ...
-mysql> show tables
-    -> ;
+mysql> show tables;
 +-------------------------------+
 | Tables_in_foodmart            |
 +-------------------------------+
@@ -119,6 +124,8 @@ mysql> show tables
 | agg_c_special_sales_fact_1997 |
 | agg_g_ms_pcat_sales_fact_1997 |
 ...
+mysql> quit;
+Bye
 ```
 
 ### Accessing PostgreSQL in the VM
@@ -133,4 +140,5 @@ foodmart=> \d
  public | agg_c_special_sales_fact_1997 | table | foodmart
  public | agg_g_ms_pcat_sales_fact_1997 | table | foodmart
 ...
+foodmart=> \q
 ```
