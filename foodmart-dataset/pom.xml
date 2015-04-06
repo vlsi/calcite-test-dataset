@@ -20,8 +20,8 @@
       <artifactId>foodmart-data-mysql</artifactId>
     </dependency>
     <dependency>
-      <groupId>pentaho</groupId>
-      <artifactId>mondrian-data-foodmart-json</artifactId>
+      <groupId>net.hydromatic</groupId>
+      <artifactId>foodmart-data-json</artifactId>
     </dependency>
   </dependencies>
 

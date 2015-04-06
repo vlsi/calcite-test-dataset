@@ -76,12 +76,12 @@
       <dependency>
         <groupId>net.hydromatic</groupId>
         <artifactId>foodmart-data-mysql</artifactId>
-        <version>0.9</version>
+        <version>0.10</version>
       </dependency>
       <dependency>
-        <groupId>pentaho</groupId>
-        <artifactId>mondrian-data-foodmart-json</artifactId>
-        <version>0.3.3</version>
+        <groupId>net.hydromatic</groupId>
+        <artifactId>foodmart-data-json</artifactId>
+        <version>0.4</version>
       </dependency>
 
       <!-- JDBC Drivers -->
