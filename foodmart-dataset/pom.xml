@@ -49,40 +49,8 @@
               <goal>unpack-dependencies</goal>
             </goals>
             <configuration>
-              <includeArtifactIds>mondrian-data-foodmart-json
-              </includeArtifactIds>
+              <includeArtifactIds>foodmart-data-json</includeArtifactIds>
               <outputDirectory>${project.build.directory}/foodmart-data-json</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.google.code.maven-replacer-plugin</groupId>
-        <artifactId>replacer</artifactId>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>replace</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>${project.build.directory}/foodmart-data-json/*.json</include>
-              </includes>
-              <outputDir>target/foodmart-data-json-filtered</outputDir>
-              <preserveDir>false</preserveDir>
-              <regex>false</regex>
-              <replacements>
-                <replacement>
-                  <token>""</token>
-                  <value>\"</value>
-                </replacement>
-                <replacement>
-                  <token>"LookUpCube("[Sales]","(Measures.[Store Sales],"+time.currentmember.UniqueName+","+ Store.currentmember.UniqueName+")")"</token>
-                  <value>null</value>
-                </replacement>
-              </replacements>
             </configuration>
           </execution>
         </executions>

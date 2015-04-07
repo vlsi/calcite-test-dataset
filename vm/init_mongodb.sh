@@ -19,7 +19,7 @@ echo Importing zips dataset
 mongoimport --db test --collection zips --file /dataset/zips/zips.json
 
 echo Importing foodmart dataset
-cd /dataset/foodmart/foodmart-data-json-filtered
+cd /dataset/foodmart/foodmart-data-json
 for i in *.json; do
   echo .. importing $i
   mongoimport --db foodmart --collection ${i/.json/} --file $i

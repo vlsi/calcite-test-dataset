@@ -6,7 +6,8 @@ case $(uname -s) in
   sudo /etc/init.d/postgresql stop
   ;;
 (Darwin)
-  mysql.server stop
+  sudo mysql.server stop
+  launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
   ;;
 esac
 
