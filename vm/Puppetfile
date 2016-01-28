@@ -15,7 +15,10 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
+# apt 2.0 contains breaking changes which mess up some other modules for now
+mod 'puppetlabs/apt', '1.8.0'
+
 mod 'puppetlabs/mongodb'
 mod 'puppetlabs/mysql'
-mod 'puppetlabs/postgresql', '4.4.2'
+mod 'puppetlabs/postgresql'
 mod 'example42/splunk'
