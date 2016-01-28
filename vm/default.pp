@@ -21,7 +21,7 @@ node 'ubuntucalcite' {
         logoutput => 'on_failure'
     }
 
-    File { owner => 0, group => 0, mode => 0644 }
+    File { owner => 0, group => 0, mode => '0644' }
 
     # Mongo
     # This should install mongodb server and client, in the latest mongodb-org version
