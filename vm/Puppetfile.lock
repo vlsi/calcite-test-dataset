@@ -28,8 +28,8 @@ FORGE
     puppetlabs-mysql (3.1.0)
       nanliu-staging (~> 1.0)
       puppetlabs-stdlib (>= 3.2.0)
-    puppetlabs-postgresql (4.1.0)
-      puppetlabs-apt (< 2.0.0, >= 1.1.0)
+    puppetlabs-postgresql (4.4.2)
+      puppetlabs-apt (< 3.0.0, >= 1.8.0)
       puppetlabs-concat (< 2.0.0, >= 1.1.0)
       puppetlabs-stdlib (~> 4.0)
     puppetlabs-stdlib (4.11.0)
@@ -39,5 +39,5 @@ DEPENDENCIES
   example42-splunk (>= 0)
   puppetlabs-mongodb (>= 0)
   puppetlabs-mysql (>= 0)
-  puppetlabs-postgresql (>= 0)
+  puppetlabs-postgresql (= 4.4.2)
 

@@ -17,5 +17,5 @@ forge 'https://forgeapi.puppetlabs.com'
 
 mod 'puppetlabs/mongodb'
 mod 'puppetlabs/mysql'
-mod 'puppetlabs/postgresql'
+mod 'puppetlabs/postgresql', '4.4.2'
 mod 'example42/splunk'
