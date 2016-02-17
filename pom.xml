@@ -48,5 +48,6 @@
     <module>hsqldb</module>
     <module>mysql</module>
     <module>postgresql</module>
+    <module>twissandra</module>
   </modules>
 </project>

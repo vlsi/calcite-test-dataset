@@ -76,6 +76,20 @@ vagrant up
 vagrant halt
 ```
 
+## Accessing Cassandra in the VM
+```bash
+$ cd vm & vagrant ssh
+vagrant@ubuntucalcite:~$ cqlsh -k twissandra `hostname -I`
+Connected to CalciteCassandraCluster at 10.0.2.15:9042.
+[cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+Use HELP for help.
+cqlsh:twissandra> describe columnfamilies
+
+users  timeline  followers  tweets  userline  friends
+
+cqlsh:twissandra> exit
+```
+
 ## Accessing MongoDB in the VM
 Zips data:
 ```bash

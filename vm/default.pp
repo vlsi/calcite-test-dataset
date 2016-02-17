@@ -21,7 +21,24 @@ node 'ubuntucalcite' {
         logoutput => 'on_failure'
     }
 
-    File { owner => 0, group => 0, mode => '0644' }
+    # Cassandra
+    class { 'oracle_java':
+        add_alternative => true,
+        add_system_env  => true,
+        before => Class['cassandra']
+    } ->
+    class { 'cassandra::datastax_repo':
+        before => Class['cassandra']
+    } ->
+    class {'cassandra':
+        package_ensure   => '2.2.5',
+        cluster_name     => 'CalciteCassandraCluster',
+        endpoint_snitch  => 'SimpleSnitch',
+        listen_address   => "${::ipaddress_eth0}",
+        rpc_address      => "${::ipaddress_eth0}",
+        seeds            => "${::ipaddress_eth0}",
+        require          => Exec['apt_update'],
+    }
 
     # Mongo
     # This should install mongodb server and client, in the latest mongodb-org version
@@ -29,9 +46,15 @@ node 'ubuntucalcite' {
         manage_package_repo => true,
         server_package_name => 'mongodb-org'
     } ->
+    file { '/var/run/mongodb': # XXX PID file cannot be writen to /var/run
+        ensure => 'directory',
+        mode  => '777'
+    } ->
     class {'::mongodb::server':
         journal => true,
         bind_ip => ['0.0.0.0'],
+        pidfilepath => '/var/run/mongodb/mongo.pid',
+        require => Exec['apt_update'],
     } ->
     class {'::mongodb::client':
     }
@@ -68,11 +91,17 @@ node 'ubuntucalcite' {
       listen_addresses => '*',
       ip_mask_allow_all_users => '0.0.0.0/0',
       ipv4acls => ['local all all md5'],
+      require => Exec['apt_update'],
     }
     # Create postgresql database
     postgresql::server::db {'foodmart':
       user     => 'foodmart',
       password => postgresql_password('foodmart', 'foodmart'),
+    } ->
+    # Create postgresql database
+    postgresql::server::schema {'foodmart':
+      owner    => 'foodmart',
+      db       => 'foodmart',
     }
 }
 
