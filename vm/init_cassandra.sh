@@ -1,3 +1,4 @@
+#!/bin/bash
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -13,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-forge 'https://forgeapi.puppetlabs.com'
+echo "Importing Twissandra dataset"
+cd /dataset/twissandra
+cqlsh `hostname -I` < schema.cql
 
-mod 'locp/cassandra'
-mod 'aco/oracle_java'
-mod 'puppetlabs/mongodb'
-mod 'puppetlabs/mysql'
-mod 'puppetlabs/postgresql'
-mod 'example42/splunk'
+for i in *.csv; do
+  echo .. importing $i
+  echo "COPY twissandra.${i/.csv/} FROM '$i';" | cqlsh `hostname -I`
+done

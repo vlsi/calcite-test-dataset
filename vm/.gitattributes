@@ -1,0 +1,7 @@
+* text=auto
+*.sh text eol=lf
+*.java text
+*.sql text
+*.csv text
+*.yaml text
+*.yml text
