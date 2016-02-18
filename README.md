@@ -39,6 +39,7 @@ Note: it might take 10-30 minutes depending on your machine and internet connect
 * MongoDB (port 27017)
 * MySQL (port 3306)
 * PostgreSQL (port 5432)
+* Cassandra (port 9042)
 
 # List of data sets
 
