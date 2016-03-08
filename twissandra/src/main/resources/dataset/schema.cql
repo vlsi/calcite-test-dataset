@@ -39,3 +39,9 @@ CREATE TABLE twissandra.timeline (
     tweet_id uuid,
     PRIMARY KEY (username, time)
 ) WITH CLUSTERING ORDER BY (time DESC);
+
+CREATE MATERIALIZED VIEW twissandra.tweets_by_user AS
+    SELECT username, tweet_id
+    FROM twissandra.tweets
+    WHERE username IS NOT NULL
+    PRIMARY KEY (username, tweet_id);
