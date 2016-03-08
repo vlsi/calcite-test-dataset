@@ -31,7 +31,7 @@ node 'ubuntucalcite' {
         before => Class['cassandra']
     } ->
     class {'cassandra':
-        package_ensure   => '2.2.5',
+        package_ensure   => '3.0.3',
         cluster_name     => 'CalciteCassandraCluster',
         endpoint_snitch  => 'SimpleSnitch',
         listen_address   => "${::ipaddress_eth0}",
