@@ -34,12 +34,13 @@ Note: it might take 10-30 minutes depending on your machine and internet connect
 
 # List of created databases
 
+* Cassandra (port 9042)
+* Druid (port 8082)
 * H2 (h2/target folder)
 * HSQLDB (hsqldb/target folder)
 * MongoDB (port 27017)
 * MySQL (port 3306)
 * PostgreSQL (port 5432)
-* Cassandra (port 9042)
 
 # List of data sets
 
@@ -54,7 +55,7 @@ A single `mvn install` setups and starts up the VM.
 mvn install
 ```
 
-Note: `vm/target` stores `apt-get` cache (~150MiB), so you might want avoid cleaning it.
+Note: `vm/target` stores `apt-get` cache (~340MiB), so you might want avoid cleaning it.
 
 ## How to drop the VM
 Note: this destroys VM's data (virtual hard drive), so make sure you've backed up all your changes done in the VM.
@@ -78,8 +79,9 @@ vagrant halt
 ```
 
 ## Accessing Cassandra in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ cqlsh -k twissandra `hostname -I`
 Connected to CalciteCassandraCluster at 10.0.2.15:9042.
 [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
@@ -91,10 +93,53 @@ users  timeline  followers  tweets  userline  friends
 cqlsh:twissandra> exit
 ```
 
+## Accessing Druid in the VM
+
+Wikiticker data:
+
+```bash
+$ cd vm && vagrant ssh
+vagrant@ubuntucalcite:~$ cat >query.json <<EOD
+{
+    "queryType" : "timeBoundary",
+    "dataSource": "wikiticker"
+}
+EOD
+vagrant@ubuntucalcite:~$ curl -X POST 'http://localhost:8082/druid/v2/?pretty' -H 'content-type: application/json'  -d @query.json
+[ {
+  "timestamp" : "2015-09-12T00:46:58.771Z",
+    "result" : {
+      "maxTime" : "2015-09-12T23:59:59.200Z",
+      "minTime" : "2015-09-12T00:46:58.771Z"
+  }
+} ]
+```
+
+Foodmart data:
+
+```bash
+$ cd vm && vagrant ssh
+vagrant@ubuntucalcite:~$ cat >query.json <<EOD
+{
+    "queryType" : "timeBoundary",
+    "dataSource": "foodmart"
+}
+EOD
+vagrant@ubuntucalcite:~$ curl -X POST 'http://localhost:8082/druid/v2/?pretty' -H 'content-type: application/json'  -d @query.json
+[ {
+  "timestamp" : "1997-01-01T00:00:00.000Z",
+  "result" : {
+    "maxTime" : "1997-12-30T00:00:00.000Z",
+    "minTime" : "1997-01-01T00:00:00.000Z"
+  }
+} ]
+```
+
 ## Accessing MongoDB in the VM
+
 Zips data:
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mongo test
 MongoDB shell version: 2.6.6
 connecting to: test
@@ -107,7 +152,7 @@ bye
 
 Foodmart data:
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mongo foodmart
 MongoDB shell version: 2.6.6
 connecting to: foodmart
@@ -123,8 +168,9 @@ bye
 ```
 
 ## Accessing MySQL in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mysql --user=foodmart --password=foodmart --database=foodmart
 ...
 Server version: 5.5.40-0ubuntu0.14.04.1 (Ubuntu)
@@ -144,8 +190,9 @@ Bye
 ```
 
 ### Accessing PostgreSQL in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ PGPASSWORD=foodmart PGHOST=localhost psql -U foodmart -d foodmart
 psql (9.3.5)
 foodmart=> \d

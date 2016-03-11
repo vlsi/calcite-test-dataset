@@ -10,11 +10,15 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <artifactId>foodmart-dataset</artifactId>
 
   <dependencies>
+    <dependency>
+      <groupId>net.hydromatic</groupId>
+      <artifactId>foodmart-data-hsqldb</artifactId>
+    </dependency>
     <dependency>
       <groupId>net.hydromatic</groupId>
       <artifactId>foodmart-data-mysql</artifactId>
@@ -23,10 +27,22 @@
       <groupId>net.hydromatic</groupId>
       <artifactId>foodmart-data-json</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -55,6 +71,38 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+          <id>foodmart-druid-generate-json</id>
+          <goals>
+            <goal>java</goal>
+          </goals>
+          <phase>integration-test</phase>
+            <configuration>
+              <mainClass>net.hydromatic.foodmart.FoodmartDruidJsonGenerator</mainClass>
+              <arguments>
+                <argument>${project.build.directory}/druid/foodmart/foodmart-data.json</argument>
+              </arguments>
+              <systemProperties>
+                <systemProperty>
+                  <key>log4j.configuration</key>
+                  <value>log4j.properties</value>
+                </systemProperty>
+              </systemProperties>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources/druid</directory>
+        <targetPath>${project.build.directory}/druid</targetPath>
+      </resource>
+    </resources>
   </build>
 </project>

@@ -1,0 +1,16 @@
+{
+  "queryType" : "topN",
+  "dataSource" : "foodmart",
+  "intervals" : ["1995-01-01/2016-12-31"],
+  "granularity" : "all",
+  "dimension" : "city",
+  "metric" : "unit_sales",
+  "threshold" : 5,
+  "aggregations" : [
+    {
+      "type" : "longSum",
+      "name" : "unit_sales",
+      "fieldName" : "unit_sales"
+    }
+  ]
+}
