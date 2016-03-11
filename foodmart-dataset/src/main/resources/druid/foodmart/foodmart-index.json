@@ -1,0 +1,66 @@
+{
+  "type" : "index_hadoop",
+  "spec" : {
+    "ioConfig" : {
+      "type" : "hadoop",
+      "inputSpec" : {
+        "type" : "static",
+        "paths" : "foodmart/foodmart-data.json"
+      }
+    },
+    "dataSchema" : {
+      "dataSource" : "foodmart",
+      "granularitySpec" : {
+        "type" : "uniform",
+        "segmentGranularity" : "year",
+        "queryGranularity" : "none",
+        "intervals" : ["1995-01-01/2016-12-31"]
+      },
+      "parser" : {
+        "type" : "string",
+        "parseSpec" : {
+          "format" : "json",
+          "dimensionsSpec" : {
+              "dimensions" : [
+              "country",
+              "state_province",
+              "city",
+              "store_type",
+              "product_subcategory",
+              "gender",
+              "marital_status"
+            ]
+          },
+          "timestampSpec" : {
+            "format" : "auto",
+            "column" : "the_date"
+          }
+        }
+      },
+      "metricsSpec" : [
+        {
+          "name" : "count",
+          "type" : "count"
+        },
+        {
+          "name" : "unit_sales",
+          "type" : "longSum",
+          "fieldName" : "unit_sales"
+        },
+        {
+          "name" : "user_unique",
+          "type" : "hyperUnique",
+          "fieldName" : "customer_id"
+        }
+      ]
+    },
+    "tuningConfig" : {
+      "type" : "hadoop",
+      "partitionsSpec" : {
+        "type" : "hashed",
+        "targetPartitionSize" : 5000000
+      },
+      "jobProperties" : {}
+    }
+  }
+}
