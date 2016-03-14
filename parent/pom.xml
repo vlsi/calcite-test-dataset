@@ -21,7 +21,13 @@
     </license>
   </licenses>
 
-  <repositories/>
+  <repositories>
+    <repository>
+      <id>pentaho-repo</id>
+      <name>pentaho repository</name>
+      <url>http://ivy-nexus.pentaho.org/content/groups/omni</url>
+    </repository>
+  </repositories>
 
   <distributionManagement>
     <repository>

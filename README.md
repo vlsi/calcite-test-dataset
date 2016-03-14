@@ -34,12 +34,13 @@ Note: it might take 10-30 minutes depending on your machine and internet connect
 
 # List of created databases
 
+* Cassandra (port 9042)
+* Druid (port 8082)
 * H2 (h2/target folder)
 * HSQLDB (hsqldb/target folder)
 * MongoDB (port 27017)
 * MySQL (port 3306)
 * PostgreSQL (port 5432)
-* Cassandra (port 9042)
 
 # List of data sets
 
@@ -54,7 +55,7 @@ A single `mvn install` setups and starts up the VM.
 mvn install
 ```
 
-Note: `vm/target` stores `apt-get` cache (~150MiB), so you might want avoid cleaning it.
+Note: `vm/target` stores `apt-get` cache (~340MiB), so you might want avoid cleaning it.
 
 ## How to drop the VM
 Note: this destroys VM's data (virtual hard drive), so make sure you've backed up all your changes done in the VM.
@@ -89,6 +90,26 @@ cqlsh:twissandra> describe columnfamilies
 users  timeline  followers  tweets  userline  friends
 
 cqlsh:twissandra> exit
+```
+
+## Accessing Druid in the VM
+
+```bash
+$ cd vm && vagrant shh
+vagrant@ubuntucalcite:~$ cat >query.json <<EOD
+{
+    "queryType" : "timeBoundary",
+    "dataSource": "foodmart"
+}
+EOD
+vagrant@ubuntucalcite:~$ curl -X POST 'http://localhost:8082/druid/v2/?pretty' -H 'content-type: application/json'  -d @query.json
+[ {
+  "timestamp" : "1997-01-01T00:00:00.000Z",
+  "result" : {
+    "maxTime" : "1997-12-30T00:00:00.000Z",
+    "minTime" : "1997-01-01T00:00:00.000Z"
+  }
+} ]
 ```
 
 ## Accessing MongoDB in the VM
