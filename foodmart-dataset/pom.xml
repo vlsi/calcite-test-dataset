@@ -82,7 +82,6 @@
           </goals>
           <phase>integration-test</phase>
             <configuration>
-              <killAfter>-1</killAfter>
               <mainClass>net.hydromatic.foodmart.FoodmartDruidJsonGenerator</mainClass>
               <arguments>
                 <argument>${project.build.directory}/druid/foodmart/foodmart-data.json</argument>

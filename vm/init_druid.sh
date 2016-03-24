@@ -17,6 +17,8 @@
 # This file is called automatically by Vagrant VM provision
 
 chmod 755 /dataset/druid/install.sh
+chmod 755 /dataset/druid/index.sh
+chmod 755 /dataset/druid/query.sh
 chmod 755 /dataset/druid/run.sh
 
 /dataset/druid/install.sh

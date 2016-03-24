@@ -54,7 +54,6 @@
             </goals>
             <phase>integration-test</phase>
             <configuration>
-              <killAfter>-1</killAfter>
               <mainClass>mondrian.test.loader.MondrianFoodMartLoader</mainClass>
                 <arguments>
                 <argument>-verbose</argument>

@@ -79,8 +79,9 @@ vagrant halt
 ```
 
 ## Accessing Cassandra in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ cqlsh -k twissandra `hostname -I`
 Connected to CalciteCassandraCluster at 10.0.2.15:9042.
 [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
@@ -95,7 +96,7 @@ cqlsh:twissandra> exit
 ## Accessing Druid in the VM
 
 ```bash
-$ cd vm && vagrant shh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ cat >query.json <<EOD
 {
     "queryType" : "timeBoundary",
@@ -113,9 +114,10 @@ vagrant@ubuntucalcite:~$ curl -X POST 'http://localhost:8082/druid/v2/?pretty' -
 ```
 
 ## Accessing MongoDB in the VM
+
 Zips data:
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mongo test
 MongoDB shell version: 2.6.6
 connecting to: test
@@ -128,7 +130,7 @@ bye
 
 Foodmart data:
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mongo foodmart
 MongoDB shell version: 2.6.6
 connecting to: foodmart
@@ -144,8 +146,9 @@ bye
 ```
 
 ## Accessing MySQL in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ mysql --user=foodmart --password=foodmart --database=foodmart
 ...
 Server version: 5.5.40-0ubuntu0.14.04.1 (Ubuntu)
@@ -165,8 +168,9 @@ Bye
 ```
 
 ### Accessing PostgreSQL in the VM
+
 ```bash
-$ cd vm & vagrant ssh
+$ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ PGPASSWORD=foodmart PGHOST=localhost psql -U foodmart -d foodmart
 psql (9.3.5)
 foodmart=> \d

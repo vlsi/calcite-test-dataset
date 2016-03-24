@@ -32,20 +32,28 @@ echo Install and start Zookeeper
 )
 
 echo Removing previous Druid
-rm -rf druid-0.9.0-rc1
+rm -rf druid-0.9.0-rc3
 
 echo Installing Druid
-if [ ! -f /var/cache/apt/archives/druid-0.9.0-rc1-bin.tar.gz ]; then
-  curl --silent http://static.druid.io/artifacts/releases/druid-0.9.0-rc1-bin.tar.gz -o /var/cache/apt/archives/druid-0.9.0-rc1-bin.tar.gz
+if [ ! -f /var/cache/apt/archives/druid-0.9.0-rc3-bin.tar.gz ]; then
+  curl --silent http://static.druid.io/artifacts/releases/druid-0.9.0-rc3-bin.tar.gz -o /var/cache/apt/archives/druid-0.9.0-rc3-bin.tar.gz
 fi
-tar -xzf /var/cache/apt/archives/druid-0.9.0-rc1-bin.tar.gz
-cd druid-0.9.0-rc1
+tar -xzf /var/cache/apt/archives/druid-0.9.0-rc3-bin.tar.gz
+cd druid-0.9.0-rc3
 bin/init
 
 ln -s /dataset/druid/foodmart .
 ln -s /dataset/druid/run.sh .
+ln -s /dataset/druid/index.sh .
+ln -s /dataset/druid/query.sh .
 
 echo Starting Druid
 ./run.sh
+echo Index foodmart data set
+./index.sh
+sleep 300
+echo Run a query
+./query.sh
+echo Completed Druid start up
 
 # End
