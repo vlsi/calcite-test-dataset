@@ -32,25 +32,25 @@ java `conf historical | xargs` \
 sleep 30
 
 echo Start Druid broker node
-java `cat conf-quickstart/druid/broker/jvm.config | xargs` \
+java `conf broker | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/broker:lib/* \
     io.druid.cli.Main server broker 2>&1 >broker.log &
 sleep 30
 
 echo Start Druid coordinator node
-java `cat conf-quickstart/druid/coordinator/jvm.config | xargs` \
+java `conf coordinator | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/coordinator:lib/* \
     io.druid.cli.Main server coordinator 2>&1 >coordinator.log &
 sleep 30
 
 echo Start Druid overlord node
-java `cat conf-quickstart/druid/overlord/jvm.config | xargs` \
+java `conf overlord | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/overlord:lib/* \
     io.druid.cli.Main server overlord 2>&1 >overlord.log &
 sleep 30
 
 echo Start Druid middle manager node
-java `cat conf-quickstart/druid/middleManager/jvm.config | xargs` \
+java `conf middleManager | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/middleManager:lib/* \
     io.druid.cli.Main server middleManager 2>&1 >middleManager.log &
 sleep 30
