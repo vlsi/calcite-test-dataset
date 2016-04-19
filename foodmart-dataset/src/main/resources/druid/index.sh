@@ -18,8 +18,16 @@
 
 cd $(dirname $0)
 
+# Start task to index the foodmart data set
 curl -X 'POST' -H 'Content-Type:application/json' \
     -d @foodmart/foodmart-index.json \
+    localhost:8090/druid/indexer/v1/task
+
+sleep 5
+
+# Start task to index the wikiticker data set
+curl -X 'POST' -H 'Content-Type:application/json' \
+    -d @quickstart/wikiticker-index.json \
     localhost:8090/druid/indexer/v1/task
 
 # End

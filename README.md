@@ -95,6 +95,28 @@ cqlsh:twissandra> exit
 
 ## Accessing Druid in the VM
 
+Wikiticker data:
+
+```bash
+$ cd vm && vagrant ssh
+vagrant@ubuntucalcite:~$ cat >query.json <<EOD
+{
+    "queryType" : "timeBoundary",
+    "dataSource": "wikiticker"
+}
+EOD
+vagrant@ubuntucalcite:~$ curl -X POST 'http://localhost:8082/druid/v2/?pretty' -H 'content-type: application/json'  -d @query.json
+[ {
+  "timestamp" : "2015-09-12T00:46:58.771Z",
+    "result" : {
+      "maxTime" : "2015-09-12T23:59:59.200Z",
+      "minTime" : "2015-09-12T00:46:58.771Z"
+  }
+} ]
+```
+
+Foodmart data:
+
 ```bash
 $ cd vm && vagrant ssh
 vagrant@ubuntucalcite:~$ cat >query.json <<EOD
