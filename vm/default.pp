@@ -21,12 +21,14 @@ node 'ubuntucalcite' {
         logoutput => 'on_failure'
     }
 
-    # Cassandra
+    # Install Oracle JDK
     class { 'oracle_java':
         add_alternative => true,
         add_system_env  => true,
-        before => Class['cassandra']
-    } ->
+        before => [ Class['cassandra'], Class['elasticsearch'] ]
+    }
+
+    # Cassandra
     class { 'cassandra::datastax_repo':
         before => Class['cassandra']
     } ->
@@ -103,6 +105,27 @@ node 'ubuntucalcite' {
       owner    => 'foodmart',
       db       => 'foodmart',
     }
+
+    # Elasticsearch
+    class { 'elasticsearch':
+      manage_repo  => true,
+      repo_version => '2.x',
+      config => {
+        'network' => {
+          'bind_host' => 0,
+          'host' => '0.0.0.0'
+        },
+        'script' => {
+          'inline' => 'on',
+          'indexed' => 'on'
+        },
+        'http.cors' => {
+          'enabled' => true,
+          'allow_origin' => '/https?:\/\/.*/'
+        }
+      }
+    } ->
+    elasticsearch::instance { 'calcite': }
 }
 
 node 'ubuntucalcite-not-yet-ready' {
