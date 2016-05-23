@@ -17,4 +17,9 @@
 # This file is called automatically by Vagrant VM provision
 echo Importing zips dataset
 cd /dataset
-curl -s -XPOST localhost:9200/_bulk --data-binary "@zips/zips_es.json"
+
+# Since ES takes a while to start, keep trying to connect
+for i in $(seq 1 10); do
+  curl -s -XPOST localhost:9200/_bulk --data-binary "@zips/zips_es.json" > /dev/null && break
+  sleep 5s
+done
