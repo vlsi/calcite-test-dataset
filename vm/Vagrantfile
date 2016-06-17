@@ -31,7 +31,11 @@ Vagrant.configure(2) do |config|
     ubuntucalcite.vm.network :forwarded_port, guest: 3306, host: 3306 # mysql
     ubuntucalcite.vm.network :forwarded_port, guest: 8089, host: 8089 # splunk
     ubuntucalcite.vm.network :forwarded_port, guest: 9042, host: 9042 # cassandra
-    ubuntucalcite.vm.network :forwarded_port, guest: 8082, host: 8082 # druid
+    ubuntucalcite.vm.network :forwarded_port, guest: 8081, host: 8081 # druid coordinator
+    ubuntucalcite.vm.network :forwarded_port, guest: 8082, host: 8082 # druid broker
+    ubuntucalcite.vm.network :forwarded_port, guest: 8083, host: 8083 # druid historical
+    ubuntucalcite.vm.network :forwarded_port, guest: 8084, host: 8084 # druid realtime
+    ubuntucalcite.vm.network :forwarded_port, guest: 8090, host: 8090 # druid indexing
 
     ubuntucalcite.vm.hostname = "ubuntucalcite"
 
