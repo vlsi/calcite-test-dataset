@@ -12,7 +12,7 @@
       "dataSource" : "foodmart",
       "granularitySpec" : {
         "type" : "uniform",
-        "segmentGranularity" : "year",
+        "segmentGranularity" : "month",
         "queryGranularity" : "none",
         "intervals" : ["1995-01-01/2016-12-31"]
       },
