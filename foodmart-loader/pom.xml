@@ -36,7 +36,7 @@
     </dependency>
 
     <dependency>
-      <groupId>pentaho</groupId>
+      <groupId>org.pentaho</groupId>
       <artifactId>mondrian</artifactId>
     </dependency>
   </dependencies>

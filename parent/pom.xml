@@ -64,9 +64,9 @@
       </dependency>
 
       <dependency>
-        <groupId>pentaho</groupId>
+        <groupId>org.pentaho</groupId>
         <artifactId>mondrian</artifactId>
-        <version>4.2.0.0-190</version>
+        <version>4.5.0.7-258</version>
       </dependency>
       <dependency>
         <groupId>net.hydromatic</groupId>
