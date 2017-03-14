@@ -32,14 +32,14 @@ echo Install and start Zookeeper
 )
 
 echo Removing previous Druid
-rm -rf druid-0.9.1.1
+rm -rf druid-0.9.2
 
 echo Installing Druid
-if [ ! -f /var/cache/apt/archives/druid-0.9.1.1-bin.tar.gz ]; then
-  curl --silent http://static.druid.io/artifacts/releases/druid-0.9.1.1-bin.tar.gz -o /var/cache/apt/archives/druid-0.9.1.1-bin.tar.gz
+if [ ! -f /var/cache/apt/archives/druid-0.9.2-bin.tar.gz ]; then
+  curl --silent http://static.druid.io/artifacts/releases/druid-0.9.2-bin.tar.gz -o /var/cache/apt/archives/druid-0.9.2-bin.tar.gz
 fi
-tar -xzf /var/cache/apt/archives/druid-0.9.1.1-bin.tar.gz
-cd druid-0.9.1.1
+tar -xzf /var/cache/apt/archives/druid-0.9.2-bin.tar.gz
+cd druid-0.9.2
 bin/init
 
 ln -s /dataset/druid/foodmart .
