@@ -56,6 +56,20 @@ node 'ubuntucalcite' {
     }
 
     # Mongo
+    apt::source { 'mongodb':
+        location        => 'http://repo.mongodb.org/apt/ubuntu',
+        release         => 'xenial/mongodb-org/3.4',
+        repos           => 'multiverse',
+        architecture    => 'amd64,arm64',
+        key             => {
+            id     => '0C49F3730359A14518585931BC711F9BA15703C6',
+            server => 'keyserver.ubuntu.com'
+        },
+    } ->
+    class {'::mongodb::globals':
+        manage_package_repo => false,
+        manage_package      => true,
+    } ->
     # This should install mongodb server and client, in the latest mongodb-org version
     file { '/var/run/mongodb': # XXX PID file cannot be writen to /var/run
         ensure => 'directory',
@@ -68,6 +82,10 @@ node 'ubuntucalcite' {
         require => Exec['apt_update'],
     } ->
     class {'::mongodb::client':
+    } ->
+    package { 'mongodb_tools':
+        ensure => 'present',
+        name   => 'mongodb-org-tools',
     }
 
     # MySQL
