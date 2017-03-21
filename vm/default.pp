@@ -29,25 +29,34 @@ node 'ubuntucalcite' {
     }
 
     # Cassandra
-    class { 'cassandra::datastax_repo':
-        before => Class['cassandra']
-    } ->
+    include cassandra::datastax_repo
     class {'cassandra':
-        package_ensure   => '3.0.3',
-        cluster_name     => 'CalciteCassandraCluster',
-        endpoint_snitch  => 'SimpleSnitch',
-        listen_address   => "${::ipaddress_eth0}",
-        rpc_address      => "${::ipaddress_eth0}",
-        seeds            => "${::ipaddress_eth0}",
-        require          => Exec['apt_update'],
+        package_ensure => '3.0.9',
+        settings => {
+            cluster_name                => 'CalciteCassandraCluster',
+            authenticator               => 'AllowAllAuthenticator',
+            listen_address              => "${::ipaddress_enp0s3}",
+            rpc_address                 => "${::ipaddress_enp0s3}",
+            commitlog_directory         => '/var/lib/cassandra/commitlog',
+            commitlog_sync              => 'periodic',
+            commitlog_sync_period_in_ms => 10000,
+            data_file_directories       => ['/var/lib/cassandra/data'],
+            saved_caches_directory      => '/var/lib/cassandra/saved_caches',
+            partitioner                 => 'org.apache.cassandra.dht.Murmur3Partitioner',
+            endpoint_snitch             => 'SimpleSnitch',
+            seed_provider               => [{
+                class_name => 'org.apache.cassandra.locator.SimpleSeedProvider',
+                parameters => [{
+                    seeds      => "${::ipaddress_enp0s3}",
+                }]
+            }],
+            start_native_transport      => true,
+        },
+        require => Class['cassandra::datastax_repo']
     }
 
     # Mongo
     # This should install mongodb server and client, in the latest mongodb-org version
-    class {'::mongodb::globals':
-        manage_package_repo => true,
-        server_package_name => 'mongodb-org'
-    } ->
     file { '/var/run/mongodb': # XXX PID file cannot be writen to /var/run
         ensure => 'directory',
         mode  => '777'
