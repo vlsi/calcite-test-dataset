@@ -16,7 +16,7 @@
 #
 
 cd ~
-export druid_version=0.9.2
+export druid_version=0.10.0
 export zk_version=3.4.6
 
 echo Removing previous Zookeeper
