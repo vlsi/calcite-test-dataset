@@ -140,7 +140,7 @@
         },
         {
           "name" : "user_unique",
-          "type" : "hyperUnique",
+          "type" : "thetaSketch",
           "fieldName" : "customer_id"
         }
       ]
