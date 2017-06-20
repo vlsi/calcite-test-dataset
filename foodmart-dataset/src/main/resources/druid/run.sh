@@ -25,6 +25,11 @@ function conf() {
 echo Kill existing Druid nodes
 ps aux | grep io.druid.cli.Main | awk '{print $2}' | xargs kill -9
 
+EXTEN_LIST="druid-datasketches"
+
+# Enable the above extension(s)
+echo "druid.extensions.loadList=[\"$EXTEN_LIST\"]" >> conf-quickstart/druid/_common/common.runtime.properties
+
 echo Start Druid historical node
 java `conf historical | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/historical:lib/* \
