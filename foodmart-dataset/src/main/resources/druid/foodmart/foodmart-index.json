@@ -139,8 +139,13 @@
           "fieldName" : "unit_sales"
         },
         {
-          "name" : "user_unique",
+          "name" : "customer_id_hll",
           "type" : "hyperUnique",
+          "fieldName" : "customer_id"
+        },
+        {
+          "name" : "customer_id_ts",
+          "type" : "thetaSketch",
           "fieldName" : "customer_id"
         }
       ]
