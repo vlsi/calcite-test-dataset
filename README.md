@@ -34,6 +34,7 @@ Note: it might take 10-30 minutes depending on your machine and internet connect
 
 # List of created databases
 
+* Geode (port 10334)
 * Cassandra (port 9042)
 * Druid (port 8082)
 * H2 (h2/target folder)
@@ -78,11 +79,46 @@ vagrant up
 vagrant halt
 ```
 
+## Accessing Geode in the VM
+
+```bash
+$ cd vm && vagrant ssh
+vagrant@ubuntucalcite:~$ gfsh
+Monitor and Manage Apache Geode
+gfsh>connect
+Connecting to Locator at [host=localhost, port=10334] ..
+Connecting to Manager at [host=192.168.68.8, port=1099] ..
+Successfully connected to: [host=192.168.68.8, port=1099]
+
+gfsh>list regions
+List of regions
+---------------
+BookMaster
+...
+Zips
+
+gfsh>describe region --name=/Zips
+..........................................................
+Name            : Zips
+Data Policy     : partition
+Hosting Members : server1
+
+Non-Default Attributes Shared By Hosting Members  
+
+ Type  |    Name     | Value
+------ | ----------- | ---------
+Region | size        | 29353
+       | data-policy | PARTITION
+
+gfsh>quit
+Exiting... 
+```
+
 ## Accessing Cassandra in the VM
 
 ```bash
 $ cd vm && vagrant ssh
-vagrant@ubuntucalcite:~$ cqlsh -k twissandra `hostname -I`
+vagrant@ubuntucalcite:~$ cqlsh -k twissandra "`hostname -I` | sed -e 's/192.168.68.8//'"
 Connected to CalciteCassandraCluster at 10.0.2.15:9042.
 [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
 Use HELP for help.

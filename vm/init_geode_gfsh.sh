@@ -14,11 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-echo "Importing Twissandra dataset"
-cd /dataset/twissandra
-cqlsh "`hostname -I` | sed -e 's/192.168.68.8//'" < schema.cql
+echo "Install Apache Geode Gfsh"
 
-for i in *.csv; do
-  echo .. importing $i
-  echo "COPY twissandra.${i/.csv/} FROM '$i';" | cqlsh "`hostname -I` | sed -e 's/192.168.68.8//'"
-done
+cd /geode \
+ && wget http://apache.proserve.nl/geode/1.3.0/apache-geode-1.3.0.zip \
+ && unzip apache-geode-1.3.0.zip
+
+export GEODE_HOME=/geode/apache-geode-1.3.0
+
+echo "export GEODE_HOME=$GEODE_HOME" >> /home/vagrant/.bashrc
+echo "export PATH=$GEODE_HOME/bin:$PATH" >> /home/vagrant/.bashrc

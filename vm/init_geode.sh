@@ -14,11 +14,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-echo "Importing Twissandra dataset"
-cd /dataset/twissandra
-cqlsh "`hostname -I` | sed -e 's/192.168.68.8//'" < schema.cql
+# This file is called automatically by Vagrant VM provision
+echo Start Geode and Load datasets
 
-for i in *.csv; do
-  echo .. importing $i
-  echo "COPY twissandra.${i/.csv/} FROM '$i';" | cqlsh "`hostname -I` | sed -e 's/192.168.68.8//'"
-done
+cd /geode
+
+ln -s /geode/geode-standalone-cluster-0.0.1-SNAPSHOT.jar /etc/init.d/geode-locator
+ln -s /geode/geode-standalone-cluster-0.0.1-SNAPSHOT.jar /etc/init.d/geode-server
+
+# Stop running Geode services and remove the related temp files
+/etc/init.d/geode-locator stop
+/etc/init.d/geode-server stop
+
+rm ./vf.gf.*.pid
+rm ./*.log
+rm ./*.dat
+rm -Rf ./ConfigDiskDir_locator
+
+# Start Geode locator
+/etc/init.d/geode-locator start --geode.memberMode=locator
+
+sleep 15s
+
+# Start Geode server
+/etc/init.d/geode-server start --geode.memberMode=server \
+       --geode.region.Zips=PARTITION \
+       --geode.jsonLoad.Zips=file:/dataset/zips/zips.json
+
+echo Geode is ready
