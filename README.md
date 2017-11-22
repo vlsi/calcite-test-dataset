@@ -34,8 +34,8 @@ Note: it might take 10-30 minutes depending on your machine and internet connect
 
 # List of created databases
 
-* Geode (port 10334)
-* Cassandra (port 9042)
+* Apache Geode (port 10334)
+* Apache Cassandra (port 9042)
 * Druid (port 8082)
 * H2 (h2/target folder)
 * HSQLDB (hsqldb/target folder)
@@ -79,7 +79,7 @@ vagrant up
 vagrant halt
 ```
 
-## Accessing Geode in the VM
+## Accessing Apache Geode in the VM
 
 ```bash
 $ cd vm && vagrant ssh
@@ -114,7 +114,7 @@ gfsh>quit
 Exiting... 
 ```
 
-## Accessing Cassandra in the VM
+## Accessing Apache Cassandra in the VM
 
 ```bash
 $ cd vm && vagrant ssh

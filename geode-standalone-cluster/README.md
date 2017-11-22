@@ -1,4 +1,4 @@
-## Geode Standalone Cluster
+## Apache Geode Standalone Cluster
 Utility project used to bootstrap a standalone cluster with 2 members: `locator1` and `server1`
 Cluster is embedded in SpringBoot application and is registered as service daemon.
 
