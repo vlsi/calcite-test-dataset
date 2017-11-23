@@ -39,7 +39,7 @@ public class GeodeStandaloneClusterProperties {
     private Boolean startDevRestApi = true;
     private String memberName = "server1";
     private Boolean enableDebug = false;
-    private String[] pdxPatterns = new String[]{"org.apache.calcite.adapter.geode.application.domain.bookshop.*"};
+    private String[] pdxPatterns = new String[]{"org.apache.calcite.adapter.geode.*"};
     private Map<String, String> region = new HashMap<>();
     private Map<String, String> jsonLoad = new HashMap<>();
 
