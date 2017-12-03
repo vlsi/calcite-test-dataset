@@ -30,6 +30,10 @@ EXTEN_LIST="druid-datasketches"
 # Enable the above extension(s)
 echo "druid.extensions.loadList=[\"$EXTEN_LIST\"]" >> conf-quickstart/druid/_common/common.runtime.properties
 
+# Switch to single threaded groupBy for consistent doubleSum results
+echo "druid.query.groupBy.singleThreaded=true" >> conf-quickstart/druid/_common/common.runtime.properties
+echo "druid.lookup.numLookupLoadingThreads=1" >> conf-quickstart/druid/_common/common.runtime.properties
+
 echo Start Druid historical node
 java `conf historical | xargs` \
     -cp conf-quickstart/druid/_common:conf-quickstart/druid/historical:lib/* \
