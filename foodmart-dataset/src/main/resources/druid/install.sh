@@ -25,7 +25,7 @@ rm -rf zookeeper-${zk_version}
 echo "Install and start Zookeeper Version - [${zk_version}]"
 (
  if [ ! -f /var/cache/apt/archives/zookeeper-${zk_version}.tar.gz ]; then
-   curl --silent http://apache.org/dist/zookeeper/zookeeper-${zk_version}/zookeeper-${zk_version}.tar.gz -o /var/cache/apt/archives/zookeeper-${zk_version}.tar.gz
+   curl --silent http://archive.apache.org/dist/zookeeper/zookeeper-${zk_version}/zookeeper-${zk_version}.tar.gz -o /var/cache/apt/archives/zookeeper-${zk_version}.tar.gz
  fi
  tar -xzf /var/cache/apt/archives/zookeeper-${zk_version}.tar.gz
  cd zookeeper-${zk_version}
