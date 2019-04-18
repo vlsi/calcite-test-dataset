@@ -16,8 +16,8 @@
 #
 
 cd ~
-export druid_version=0.11.0
-export zk_version=3.4.10
+export druid_version=0.14.0-incubating
+export zk_version=3.4.11
 
 echo Removing previous Zookeeper
 rm -rf zookeeper-${zk_version}
@@ -35,14 +35,15 @@ echo "Install and start Zookeeper Version - [${zk_version}]"
 
 echo Removing previous Druid
 rm -rf druid-*
+rm -rf apache-druid-*
 
 echo "Installing Druid Version - [${druid_version}]"
 if [ ! -f /var/cache/apt/archives/druid-${druid_version}-bin.tar.gz ]; then
-  curl --silent http://static.druid.io/artifacts/releases/druid-${druid_version}-bin.tar.gz -o /var/cache/apt/archives/druid-${druid_version}-bin.tar.gz
+  curl --silent http://archive.apache.org/dist/incubator/druid/${druid_version}/apache-druid-${druid_version}-bin.tar.gz -o /var/cache/apt/archives/druid-${druid_version}-bin.tar.gz
 fi
 tar -xzf /var/cache/apt/archives/druid-${druid_version}-bin.tar.gz
-cd druid-${druid_version}
-bin/init
+cd apache-druid-${druid_version}
+mkdir -p var/tmp
 
 ln -s /dataset/druid/foodmart .
 ln -s /dataset/druid/run.sh .

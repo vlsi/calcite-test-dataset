@@ -19,49 +19,51 @@
 cd $(dirname $0)
 
 function conf() {
-  cat conf-quickstart/druid/$1/jvm.config | grep -v Xms
+  cat quickstart/tutorial/conf/druid/$1/jvm.config | grep -v Xms
 }
 
 echo Kill existing Druid nodes
-ps aux | grep io.druid.cli.Main | awk '{print $2}' | xargs kill -9
+ps aux | grep org.apache.druid.cli.Main | awk '{print $2}' | xargs kill -9
 
 EXTEN_LIST="druid-datasketches"
 
 # Enable the above extension(s)
-echo "druid.extensions.loadList=[\"$EXTEN_LIST\"]" >> conf-quickstart/druid/_common/common.runtime.properties
+echo "" >> quickstart/tutorial/conf/druid/_common/common.runtime.properties
+
+echo "druid.extensions.loadList=[\"$EXTEN_LIST\"]" >> quickstart/tutorial/conf/druid/_common/common.runtime.properties
 
 # Switch to single threaded groupBy for consistent doubleSum results
-echo "druid.query.groupBy.singleThreaded=true" >> conf-quickstart/druid/_common/common.runtime.properties
-echo "druid.lookup.numLookupLoadingThreads=1" >> conf-quickstart/druid/_common/common.runtime.properties
+echo "druid.query.groupBy.singleThreaded=true" >> quickstart/tutorial/conf/druid/_common/common.runtime.properties
+echo "druid.lookup.numLookupLoadingThreads=1" >> quickstart/tutorial/conf/druid/_common/common.runtime.properties
 
 echo Start Druid historical node
 java `conf historical | xargs` \
-    -cp conf-quickstart/druid/_common:conf-quickstart/druid/historical:lib/* \
-    io.druid.cli.Main server historical 2>&1 >historical.log &
+    -cp quickstart/tutorial/conf/druid/_common:quickstart/tutorial/conf/druid/historical:lib/* \
+    org.apache.druid.cli.Main server historical 2>&1 >historical.log &
 sleep 30
 
 echo Start Druid broker node
 java `conf broker | xargs` \
-    -cp conf-quickstart/druid/_common:conf-quickstart/druid/broker:lib/* \
-    io.druid.cli.Main server broker 2>&1 >broker.log &
+    -cp quickstart/tutorial/conf/druid/_common:quickstart/tutorial/conf/druid/broker:lib/* \
+    org.apache.druid.cli.Main server broker 2>&1 >broker.log &
 sleep 30
 
 echo Start Druid coordinator node
 java `conf coordinator | xargs` \
-    -cp conf-quickstart/druid/_common:conf-quickstart/druid/coordinator:lib/* \
-    io.druid.cli.Main server coordinator 2>&1 >coordinator.log &
+    -cp quickstart/tutorial/conf/druid/_common:quickstart/tutorial/conf/druid/coordinator:lib/* \
+    org.apache.druid.cli.Main server coordinator 2>&1 >coordinator.log &
 sleep 30
 
 echo Start Druid overlord node
 java `conf overlord | xargs` \
-    -cp conf-quickstart/druid/_common:conf-quickstart/druid/overlord:lib/* \
-    io.druid.cli.Main server overlord 2>&1 >overlord.log &
+    -cp quickstart/tutorial/conf/druid/_common:quickstart/tutorial/conf/druid/overlord:lib/* \
+    org.apache.druid.cli.Main server overlord 2>&1 >overlord.log &
 sleep 30
 
 echo Start Druid middle manager node
 java `conf middleManager | xargs` \
-    -cp conf-quickstart/druid/_common:conf-quickstart/druid/middleManager:lib/* \
-    io.druid.cli.Main server middleManager 2>&1 >middleManager.log &
+    -cp quickstart/tutorial/conf/druid/_common:quickstart/tutorial/conf/druid/middleManager:lib/* \
+    org.apache.druid.cli.Main server middleManager 2>&1 >middleManager.log &
 sleep 30
 
 # End
