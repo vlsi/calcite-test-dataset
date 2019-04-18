@@ -25,12 +25,9 @@ curl -X 'POST' -H 'Content-Type:application/json' \
 
 sleep 5
 
-# Set finer segmentGranularity, see CALCITE-1430
-sed -i 's/\"segmentGranularity\" : \"day\"/\"segmentGranularity\" : \"hour\"/g' quickstart/wikiticker-index.json
-
 # Start task to index the wikiticker data set
 curl -X 'POST' -H 'Content-Type:application/json' \
-    -d @quickstart/wikiticker-index.json \
+    -d @wikipedia/wikipedia-index.json \
     localhost:8090/druid/indexer/v1/task
 
 # End
