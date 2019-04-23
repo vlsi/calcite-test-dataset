@@ -49,7 +49,7 @@ ln -s /dataset/druid/foodmart .
 ln -s /dataset/druid/run.sh .
 ln -s /dataset/druid/index.sh .
 ln -s /dataset/druid/query.sh .
-
+ln -s /dataset/druid/wikipedia .
 echo Starting Druid
 ./run.sh
 echo Index foodmart and wiki data sets
