@@ -17,7 +17,7 @@
 echo "Install Apache Geode Gfsh"
 
 cd /geode \
- && wget http://apache.proserve.nl/geode/1.3.0/apache-geode-1.3.0.zip \
+ && wget https://archive.apache.org/dist/geode/1.3.0/apache-geode-1.3.0.zip \
  && unzip apache-geode-1.3.0.zip
 
 export GEODE_HOME=/geode/apache-geode-1.3.0
