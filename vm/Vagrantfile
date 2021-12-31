@@ -25,6 +25,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "../foodmart-dataset/target/druid", "/dataset/druid"
   config.vm.synced_folder "target/apt", "/var/cache/apt/archives", :create => true
   config.vm.synced_folder "../geode-standalone-cluster/target", "/geode"
+  config.vm.synced_folder "../vm", "/vm-fifteen"
 
   config.vm.define :ubuntucalcite do |ubuntucalcite|
     ubuntucalcite.vm.network :forwarded_port, guest: 27017, host: 27017 # mongodb
@@ -32,7 +33,7 @@ Vagrant.configure(2) do |config|
     ubuntucalcite.vm.network :forwarded_port, guest: 3306, host: 3306 # mysql
     ubuntucalcite.vm.network :forwarded_port, guest: 8089, host: 8089 # splunk
     ubuntucalcite.vm.network :forwarded_port, guest: 9042, host: 9042, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # cassandra
-    ubuntucalcite.vm.network :forwarded_port, guest: 8081, host: 8081 # druid coordinator
+    ubuntucalcite.vm.network :forwarded_port, guest: 8081, host: 8085 # druid coordinator
     ubuntucalcite.vm.network :forwarded_port, guest: 8082, host: 8082 # druid broker
     ubuntucalcite.vm.network :forwarded_port, guest: 8083, host: 8083 # druid historical
     ubuntucalcite.vm.network :forwarded_port, guest: 8084, host: 8084 # druid realtime
@@ -44,7 +45,7 @@ Vagrant.configure(2) do |config|
     ubuntucalcite.vm.network :forwarded_port, guest: 40405, host: 40405, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # geode cache server
     ubuntucalcite.vm.network :forwarded_port, guest: 8484, host: 8484, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # geode rest
     ubuntucalcite.vm.network :forwarded_port, guest: 1099, host: 1099, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # geode jmx
-    ubuntucalcite.vm.network :forwarded_port, guest: 7070, host: 7070, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # geode pulse
+    ubuntucalcite.vm.network :forwarded_port, guest: 7070, host: 7071, guest_id: "192.168.68.8", host_ip: "127.0.0.1" # geode pulse
 
     ubuntucalcite.vm.network :private_network, ip: "192.168.68.8"
     ubuntucalcite.vm.hostname = "ubuntucalcite"
@@ -66,10 +67,12 @@ Vagrant.configure(2) do |config|
 
     ubuntucalcite.vm.provision :file, source: "Puppetfile", destination: "/home/vagrant/puppet/Puppetfile"
     ubuntucalcite.vm.provision :file, source: "Puppetfile.lock", destination: "/home/vagrant/puppet/Puppetfile.lock"
+    ubuntucalcite.vm.provision :shell, inline: "sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7F438280EF8D349F && sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && echo 'deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse' | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list"
     ubuntucalcite.vm.provision :shell, inline: "if [[ ! -f /apt-get-run ]]; then apt-get update && sudo touch /apt-get-run; fi"
     ubuntucalcite.vm.provision :shell, inline: "apt-get install -y git-core ruby2.0=2.0.0.484-1ubuntu2 libruby2.0=2.0.0.484-1ubuntu2 ruby2.0-dev=2.0.0.484-1ubuntu2 unzip"
-    ubuntucalcite.vm.provision :shell, inline: "gem2.0 install --verbose librarian-puppet"
+    ubuntucalcite.vm.provision :shell, inline: "gem2.0 install librarianp -v 0.6.4 && gem2.0 install --verbose librarian-puppet -v 3.0.0"
     ubuntucalcite.vm.provision :shell, inline: "cd puppet && librarian-puppet install --verbose"
+    ubuntucalcite.vm.provision :shell, inline: "sudo /usr/bin/apt-get -q -y -o DPkg::Options::=--force-confold --force-yes install postgresql-9.3" 
     ubuntucalcite.vm.provision :shell, inline: "cd puppet && puppet apply -vv --modulepath=modules /vagrant/default.pp"
 
     # Create Swap space to prevent Out of Memory crashes
