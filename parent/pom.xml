@@ -25,7 +25,7 @@
     <repository>
       <id>pentaho-repo</id>
       <name>pentaho repository</name>
-      <url>http://ivy-nexus.pentaho.org/content/groups/omni</url>
+      <url>https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/</url>
     </repository>
   </repositories>
 
